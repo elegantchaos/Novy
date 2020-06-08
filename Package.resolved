@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Files",
+        "repositoryURL": "https://github.com/elegantchaos/Files.git",
+        "state": {
+          "branch": null,
+          "revision": "fb3252dc942744566af0e63c1a1e8697f821dda6",
+          "version": "1.0.5"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
