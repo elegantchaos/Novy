@@ -11,8 +11,8 @@ let duplicator = Duplicator()
 let templates = fm.current.folder(["Extras", "Templates"])
 let example = fm.current.up.folder(["TemplateSources", "ActionStatus"])
 
-templates.create()
-duplicator.import(project: example, into: templates, as: "CatalystApp")
+//templates.create()
+//duplicator.import(project: example, into: templates, as: "CatalystApp")
 
 let destination = fm.current.folder("Output")
 let template = templates.folder("CatalystApp")

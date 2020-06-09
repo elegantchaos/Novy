@@ -36,7 +36,7 @@ class Duplicator {
         
         let expanded = template.copy(to: destination)
         expanded.expandNames(with: expandedKeys)
-        expanded.expandTextFiles(with: substitutions)
+        expanded.expandTextFiles(with: expandedKeys)
     }
 }
 
