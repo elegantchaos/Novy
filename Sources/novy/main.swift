@@ -8,8 +8,8 @@ import Files
 
 let fm = FolderManager.shared
 let duplicator = Duplicator()
-let templates = fm.current.folder(["Extras", "Templates"])
-let example = fm.current.up.folder(["TemplateSources", "ActionStatus"])
+let example = fm.current.up.folder(["TemplateSources", "Sources", "ActionStatus"])
+let templates = fm.current.up.folder(["TemplateSources", "Templates"])
 
 templates.create()
 duplicator.import(project: example, into: templates, as: "CatalystApp", replacing: "Action Status")
@@ -25,10 +25,11 @@ let template = templates.folder("CatalystApp")
 destination.delete()
 destination.create()
 
-var substitutions = Substitutions.forProject(named: "Example")
-substitutions[.string("«user»")] = "Sam Deane"
-substitutions[.string("«owner»")] = "Elegant Chaos"
-substitutions[.string("«date»")] = shortDate
-substitutions[.string("«year»")] = year
+var variables = [
+    "user": "Sam Deane",
+    "owner": "Elegant Chaos",
+    "date": shortDate,
+    "year": year,
+]
 
-duplicator.clone(template: template, into: destination, substitutions: substitutions)
+duplicator.clone(template: template, into: destination, as: "Example", variables: variables)

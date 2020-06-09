@@ -1,5 +1,7 @@
 # A template for git ignore
 
+Output/
+
 # Mac OS X Finder and whatnot
 .DS_Store
 

@@ -63,12 +63,18 @@ class Duplicator {
         copied.rename(as: ItemName(name), replacing: true)
     }
 
-    func clone(template: Folder, into destination: Folder, substitutions: Substitutions) {
+    func clone(template: Folder, into destination: Folder, as name: String, variables: [String:String]) {
         print("Cloning from \(template) into \(destination).")
+
+        var substitutions = Substitutions.forProject(named: "Example")
+        for (key,value) in variables {
+            substitutions[.string("«\(key)»")] = value
+        }
 
         let expanded = template.copy(to: destination)
         expanded.expandNames(with: substitutions)
         expanded.expandTextFiles(with: substitutions)
+        expanded.rename(as: ItemName(name), replacing: true)
     }
 }
 
