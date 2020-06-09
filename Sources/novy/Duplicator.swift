@@ -12,7 +12,7 @@ class Duplicator {
     func `import`(project: Folder, into templates: Folder) {
         let originalName = project.name.name
         project.copy(to: templates, replacing: true)
-        let destination = templates.folder(name: project.name)
+        let destination = templates.folder(project.name)
         destination.forEach(order: .foldersFirst) { item in
             let name = item.name.renamed(as: item.name.name.replacingOccurrences(of: originalName, with: "«project»"))
             if name != item.name {
