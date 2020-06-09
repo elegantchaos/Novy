@@ -68,6 +68,15 @@ extension Folder {
                 for (key, value) in substitutions {
                     processed = processed.replacingOccurrences(of: key, with: value)
                 }
+                
+                let createdPattern = try! NSRegularExpression(pattern: #"//  Created by (.*) on (.*)\."#, options: [])
+                let range = NSRange(location: 0, length: processed.count)
+                for match in createdPattern.matches(in: processed, options: [], range: range) {
+                    let start = processed.index(processed.startIndex, offsetBy: match.range.location)
+                    let end = processed.index(start, offsetBy: match.range.length)
+                    processed = processed.replacingCharacters(in: start..<end, with: "//  Created by «user» on «date».")
+                }
+                
                 if processed != text {
                     print("Substituted \(item.name)")
                     file.write(as: processed)
