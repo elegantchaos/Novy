@@ -23,6 +23,7 @@ class НовыйEngine: CommandEngine {
         [
             DuplicateCommand.self,
             ImportCommand.self,
+            InstallCommand.self,
             ListCommand.self,
             RevealCommand.self,
         ]

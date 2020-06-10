@@ -12,7 +12,7 @@ struct DuplicateCommand: НовыйCommand {
     @Argument() var template: String
     @Argument() var destination: String
     @OptionGroup() var common: CommandShellOptions
-    
+
     static public var configuration: CommandConfiguration {
         CommandConfiguration(commandName: "duplicate", abstract: "Create a new item from a template.")
     }
@@ -41,7 +41,7 @@ struct DuplicateCommand: НовыйCommand {
         
         let commands = cloned.file(".novy")
         if commands.exists {
-            let runner = Runner(for: commands.url)
+            let runner = Runner(for: commands.url, cwd: cloned.url)
             let result = try runner.sync(arguments: [], stdoutMode: .passthrough, stderrMode: .passthrough)
             if result.status != 0 {
                 engine.output.log("The .novy commands file returned a non-zero status.")
