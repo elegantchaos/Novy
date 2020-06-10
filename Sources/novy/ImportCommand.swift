@@ -7,6 +7,9 @@ import ArgumentParser
 import CommandShell
 
 struct ImportCommand: НовыйCommand {
+    @Argument() var from: String
+    @Option() var name: String?
+    @Option() var replacing: String?
     @OptionGroup() var common: CommandShellOptions
     
     static public var configuration: CommandConfiguration {
@@ -14,8 +17,13 @@ struct ImportCommand: НовыйCommand {
     }
     
     func run() throws {
-        let example = engine.fm.current.up.folder(["TemplateSources", "Sources", "ActionStatus"])
-        engine.templates.create()
-        engine.duplicator.import(project: example, into: engine.templates, as: "CatalystApp", replacing: "Action Status")
+        let from = engine.fm.current.folder([self.from])
+        let templates = engine.fm.home.folder([".local", "share", "novy", "templates"])
+        let originalName = from.name.name
+        let name = self.name ?? originalName
+        let replacing = self.replacing ?? originalName
+        
+        templates.create()
+        engine.duplicator.import(project: from, into: templates, as: name, replacing: replacing)
     }
 }

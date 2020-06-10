@@ -64,11 +64,15 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "--version"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "import ../TemplateSources/Sources/ActionStatus --name=CatalystApp --replacing=&quot;Action Status&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "duplicate CatalystApp Output"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>

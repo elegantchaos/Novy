@@ -10,8 +10,12 @@ import Files
 class НовыйEngine: CommandEngine {
     let fm = FolderManager.shared
     let duplicator = Duplicator()
-    var templates: Folder {
-        fm.current.up.folder(["TemplateSources", "Templates"])
+    lazy var templates = makeTemplates()
+    
+    internal func makeTemplates() -> Folder {
+        let folder = fm.home.folder([".local", "share", "novy", "templates"])
+        folder.create()
+        return folder
     }
     
     override class var subcommands: [ParsableCommand.Type] {

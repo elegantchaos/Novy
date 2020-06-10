@@ -15,7 +15,7 @@ let package = Package(
     dependencies: [
          .package(url: "https://github.com/elegantchaos/Files.git", from: "1.0.6"),
          .package(url: "https://github.com/elegantchaos/Expressions.git", from: "1.1.1"),
-         .package(url: "https://github.com/elegantchaos/CommandShell.git", from: "2.0.0"),
+         .package(url: "https://github.com/elegantchaos/CommandShell.git", from: "2.1.2"),
     ],
     targets: [
         .target(
