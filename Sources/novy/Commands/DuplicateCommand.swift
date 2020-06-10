@@ -6,6 +6,7 @@
 import ArgumentParser
 import CommandShell
 import Foundation
+import Runner
 
 struct DuplicateCommand: НовыйCommand {
     @Argument() var template: String
@@ -13,7 +14,7 @@ struct DuplicateCommand: НовыйCommand {
     @OptionGroup() var common: CommandShellOptions
     
     static public var configuration: CommandConfiguration {
-        CommandConfiguration(commandName: "duplicate", abstract: "Create a new item from a template")
+        CommandConfiguration(commandName: "duplicate", abstract: "Create a new item from a template.")
     }
     
     func run() throws {
@@ -36,6 +37,18 @@ struct DuplicateCommand: НовыйCommand {
             .yearKey: year,
         ]
 
-        engine.clone(template: template, into: destination, as: "Example", variables: variables)
+        let cloned = engine.clone(template: template, into: destination, as: "Example", variables: variables)
+        
+        let commands = cloned.file(".novy")
+        if commands.exists {
+            let runner = Runner(for: commands.url)
+            let result = try runner.sync(arguments: [], stdoutMode: .passthrough, stderrMode: .passthrough)
+            if result.status != 0 {
+                engine.output.log("The .novy commands file returned a non-zero status.")
+                throw ArgumentParser.ExitCode(result.status)
+            }
+        }
+        
+        engine.output.log("Done.")
     }
 }

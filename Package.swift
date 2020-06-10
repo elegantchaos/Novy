@@ -13,14 +13,21 @@ let package = Package(
         .macOS(.v10_13)
     ],
     dependencies: [
-         .package(url: "https://github.com/elegantchaos/Files.git", from: "1.0.6"),
-         .package(url: "https://github.com/elegantchaos/Expressions.git", from: "1.1.1"),
          .package(url: "https://github.com/elegantchaos/CommandShell.git", from: "2.1.2"),
+         .package(url: "https://github.com/elegantchaos/Expressions.git", from: "1.1.1"),
+         .package(url: "https://github.com/elegantchaos/Files.git", from: "1.0.6"),
+         .package(url: "https://github.com/elegantchaos/Runner.git", from: "1.3.0"),
     ],
     targets: [
         .target(
             name: "novy",
-            dependencies: ["CommandShell", "Expressions", "Files"]),
+            dependencies: [
+                .product(name: "CommandShell", package: "CommandShell"),
+                .product(name: "Expressions", package: "Expressions"),
+                .product(name: "Files", package: "Files"),
+                .product(name: "FilesKit", package: "Files"),
+                .product(name: "Runner", package: "Runner"),
+        ]),
         .testTarget(
             name: "novyTests",
             dependencies: ["novy"]),

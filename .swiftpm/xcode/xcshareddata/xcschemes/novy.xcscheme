@@ -67,12 +67,20 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "import ../TemplateSources/Sources/ActionStatus --name=CatalystApp --replacing=&quot;Action Status&quot;"
-            isEnabled = "YES">
+            argument = "reveal CatalystApp"
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "duplicate CatalystApp Output"
+            argument = "list"
             isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "import ../TemplateSources/Sources/ActionStatus --name=CatalystApp --replacing=&quot;Action Status&quot;"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "duplicate CatalystApp Output2"
+            isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>

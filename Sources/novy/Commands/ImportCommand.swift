@@ -13,7 +13,7 @@ struct ImportCommand: НовыйCommand {
     @OptionGroup() var common: CommandShellOptions
     
     static public var configuration: CommandConfiguration {
-        CommandConfiguration(commandName: "import", abstract: "Import a project as a template")
+        CommandConfiguration(commandName: "import", abstract: "Import a project as a template.")
     }
     
     func run() throws {
@@ -22,5 +22,6 @@ struct ImportCommand: НовыйCommand {
         let name = self.name ?? originalName
         let replacing = self.replacing ?? originalName
         engine.import(project: from, into: engine.templates, as: name, replacing: replacing)
+        engine.output.log("Done.\n")
     }
 }

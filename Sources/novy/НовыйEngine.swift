@@ -17,10 +17,14 @@ class НовыйEngine: CommandEngine {
         return folder
     }
     
+    override class var abstract: String { "Tool for creating new files and/or folders from templates." }
+    
     override class var subcommands: [ParsableCommand.Type] {
         [
+            DuplicateCommand.self,
             ImportCommand.self,
-            DuplicateCommand.self
+            ListCommand.self,
+            RevealCommand.self,
         ]
     }
     
@@ -43,11 +47,9 @@ class НовыйEngine: CommandEngine {
         expandNames(in: copied, with: substitutions)
         expandTextFiles(in: copied, with: substitutions)
         copied.rename(as: ItemName(name), replacing: true)
-        
-        output.log("Done.\n")
     }
 
-    func clone(template: Folder, into destination: Folder, as name: String, variables: Variables) {
+    func clone(template: Folder, into destination: Folder, as name: String, variables: Variables) -> Folder {
         output.log("Cloning from \(template) into \(destination).")
 
         var substitutions = Substitutions.forProject(named: "Example")
@@ -58,9 +60,10 @@ class НовыйEngine: CommandEngine {
         let expanded = template.copy(to: destination)
         expandNames(in: expanded, with: substitutions)
         expandTextFiles(in: expanded, with: substitutions)
-        expanded.rename(as: ItemName(name), replacing: true)
-
-        output.log("Done.\n")
+        
+        let result = expanded.rename(as: ItemName(name), replacing: true)
+        
+        return result
     }
 
     func expandNames(in folder: Folder, with substitutions: Substitutions) {
