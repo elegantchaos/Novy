@@ -36,6 +36,6 @@ struct DuplicateCommand: НовыйCommand {
             .yearKey: year,
         ]
 
-        engine.duplicator.clone(template: template, into: destination, as: "Example", variables: variables)
+        engine.clone(template: template, into: destination, as: "Example", variables: variables)
     }
 }

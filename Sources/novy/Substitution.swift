@@ -66,37 +66,6 @@ extension Substitutions {
     }
 }
 
-class Duplicator {
-    let fileManager = FileManager.default
-    
-    func `import`(project: Folder, into templates: Folder, as name: String, replacing: String) {
-        print("Importing from \(project) into \(templates) as \(name).")
-
-        var substitutions = Substitutions.forProject(named: replacing).switched()
-        substitutions[.patternString(#"//  Created by (.*) on (.*)\."#)] = "//  Created by \(String.userKey.subtitutionQuoted) on \(String.dateKey.subtitutionQuoted)."
-        substitutions[.patternString(#"//  All code \(c\) \d+ - present day, .*\."#)] = "//  All code (c) \(String.yearKey.subtitutionQuoted) - present day, \(String.ownerKey.subtitutionQuoted)."
-        
-        let copied = project.copy(to: templates, replacing: true)
-        copied.expandNames(with: substitutions)
-        copied.expandTextFiles(with: substitutions)
-        copied.rename(as: ItemName(name), replacing: true)
-    }
-
-    func clone(template: Folder, into destination: Folder, as name: String, variables: Variables) {
-        print("Cloning from \(template) into \(destination).")
-
-        var substitutions = Substitutions.forProject(named: "Example")
-        for (key,value) in variables {
-            substitutions[.quotedString(key)] = value
-        }
-
-        let expanded = template.copy(to: destination)
-        expanded.expandNames(with: substitutions)
-        expanded.expandTextFiles(with: substitutions)
-        expanded.rename(as: ItemName(name), replacing: true)
-    }
-}
-
 extension String {
     func applying(substitutions: Substitutions) -> String {
         var processed = self
@@ -110,35 +79,5 @@ extension String {
             }
         }
         return processed
-    }
-}
-
-extension Folder {
-    func expandNames(with substitutions: Substitutions) {
-        forEach(order: .foldersFirst, recursive: true) { item in
-            if item.name.name == ".git" {
-                print("Removed \(item).")
-                item.delete()
-            } else {
-                let expandedName = item.name.name.applying(substitutions: substitutions)
-                let newName = item.name.renamed(as: expandedName)
-                if newName != item.name {
-                    print("Renamed \(item.name) as \(newName).")
-                    item.rename(as: newName)
-                }
-            }
-        }
-    }
-    
-    func expandTextFiles(with substitutions: Substitutions) {
-        forEach(filter: .files, recursive: true) { item in
-            if let file = item as? File, let text = file.asText {
-                let processed = text.applying(substitutions: substitutions)
-                if processed != text {
-                    print("Substituted \(item.name)")
-                    file.write(as: processed)
-                }
-            }
-        }
     }
 }

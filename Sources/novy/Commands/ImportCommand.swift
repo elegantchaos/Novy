@@ -21,6 +21,6 @@ struct ImportCommand: НовыйCommand {
         let originalName = from.name.name
         let name = self.name ?? originalName
         let replacing = self.replacing ?? originalName
-        engine.duplicator.import(project: from, into: engine.templates, as: name, replacing: replacing)
+        engine.import(project: from, into: engine.templates, as: name, replacing: replacing)
     }
 }
