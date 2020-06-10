@@ -3,8 +3,22 @@
 //  All code (c) 2020 - present day, Elegant Chaos Limited.
 // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-import Foundation
+import Expressions
 import Files
+import Foundation
+
+extension String {
+    static let projectKey = "project"
+    static let projectCamelKey = "projectCamel"
+    static let projectLowercaseKey = "projectLowercase"
+    static let projectUnderscoreKey = "projectUnderscore"
+    static let userKey = "user"
+    static let dateKey = "date"
+    static let yearKey = "year"
+    static let ownerKey = "owner"
+    
+    var subtitutionQuoted: String { "xXx\(self)xXx" }
+}
 
 enum SubstitutionKey: Hashable {
     case string(String)
@@ -12,12 +26,17 @@ enum SubstitutionKey: Hashable {
 }
 
 extension SubstitutionKey {
+    static func quotedString(_ string: String) -> Self {
+        .string(string.subtitutionQuoted)
+    }
+    
     static func patternString(_ string: String) -> Self {
         .pattern(try! NSRegularExpression(pattern: string, options: []))
     }
 }
 
 typealias Substitutions = [SubstitutionKey:String]
+typealias Variables = [String:String]
 
 extension Substitutions {
     static func forProject(named name: String) -> Substitutions {
@@ -26,10 +45,10 @@ extension Substitutions {
         let lower = camel.lowercased()
         let underscore = components.map({ $0.uppercased() }).joined(separator: "_")
         return [
-            .string("«project»"): name,
-            .string("«project-camel»"): camel,
-            .string("«project-lowercase»"): lower,
-            .string("«project-underscore»"): underscore
+            .quotedString(.projectKey): name,
+            .quotedString(.projectCamelKey): camel,
+            .quotedString(.projectLowercaseKey): lower,
+            .quotedString(.projectUnderscoreKey): underscore
         ]
     }
     
@@ -54,8 +73,8 @@ class Duplicator {
         print("Importing from \(project) into \(templates) as \(name).")
 
         var substitutions = Substitutions.forProject(named: replacing).switched()
-        substitutions[.patternString(#"//  Created by (.*) on (.*)\."#)] = "//  Created by «user» on «date»."
-        substitutions[.patternString(#"//  All code \(c\) \d+ - present day, .*\."#)] = "//  All code (c) «year» - present day, «owner»."
+        substitutions[.patternString(#"//  Created by (.*) on (.*)\."#)] = "//  Created by \(String.userKey.subtitutionQuoted) on \(String.dateKey.subtitutionQuoted)."
+        substitutions[.patternString(#"//  All code \(c\) \d+ - present day, .*\."#)] = "//  All code (c) \(String.yearKey.subtitutionQuoted) - present day, \(String.ownerKey.subtitutionQuoted)."
         
         let copied = project.copy(to: templates, replacing: true)
         copied.expandNames(with: substitutions)
@@ -63,12 +82,12 @@ class Duplicator {
         copied.rename(as: ItemName(name), replacing: true)
     }
 
-    func clone(template: Folder, into destination: Folder, as name: String, variables: [String:String]) {
+    func clone(template: Folder, into destination: Folder, as name: String, variables: Variables) {
         print("Cloning from \(template) into \(destination).")
 
         var substitutions = Substitutions.forProject(named: "Example")
         for (key,value) in variables {
-            substitutions[.string("«\(key)»")] = value
+            substitutions[.quotedString(key)] = value
         }
 
         let expanded = template.copy(to: destination)
@@ -83,16 +102,11 @@ extension String {
         var processed = self
         for (key, value) in substitutions {
             switch key {
-                case .string(let string):
-                    processed = processed.replacingOccurrences(of: string, with: value)
+            case .string(let string):
+                processed = processed.replacingOccurrences(of: string, with: value)
                 
-                case .pattern(let pattern):
-                    let range = NSRange(location: 0, length: processed.count)
-                    for match in pattern.matches(in: processed, options: [], range: range) {
-                        let start = processed.index(processed.startIndex, offsetBy: match.range.location)
-                        let end = processed.index(start, offsetBy: match.range.length)
-                        processed = processed.replacingCharacters(in: start..<end, with: value)
-                }
+            case .pattern(let pattern):
+                processed = pattern.substitute(in: processed) { _, _ in value }
             }
         }
         return processed

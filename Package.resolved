@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "Expressions",
+        "repositoryURL": "https://github.com/elegantchaos/Expressions.git",
+        "state": {
+          "branch": null,
+          "revision": "d821e7c75e31fddb8158d8dac578a6ba200c9f36",
+          "version": "1.0.0"
+        }
+      },
+      {
         "package": "Files",
         "repositoryURL": "https://github.com/elegantchaos/Files.git",
         "state": {

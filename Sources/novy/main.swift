@@ -25,11 +25,11 @@ let template = templates.folder("CatalystApp")
 destination.delete()
 destination.create()
 
-var variables = [
-    "user": "Sam Deane",
-    "owner": "Elegant Chaos",
-    "date": shortDate,
-    "year": year,
+var variables: Variables = [
+    .userKey: "Sam Deane",
+    .ownerKey: "Elegant Chaos",
+    .dateKey: shortDate,
+    .yearKey: year,
 ]
 
 duplicator.clone(template: template, into: destination, as: "Example", variables: variables)
