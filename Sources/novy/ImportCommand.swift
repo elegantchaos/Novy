@@ -18,12 +18,9 @@ struct ImportCommand: НовыйCommand {
     
     func run() throws {
         let from = engine.fm.current.folder([self.from])
-        let templates = engine.fm.home.folder([".local", "share", "novy", "templates"])
         let originalName = from.name.name
         let name = self.name ?? originalName
         let replacing = self.replacing ?? originalName
-        
-        templates.create()
-        engine.duplicator.import(project: from, into: templates, as: name, replacing: replacing)
+        engine.duplicator.import(project: from, into: engine.templates, as: name, replacing: replacing)
     }
 }

@@ -24,4 +24,12 @@ class НовыйEngine: CommandEngine {
             DuplicateCommand.self
         ]
     }
+    
+    func template(named name: String) -> Folder {
+        return templates.folder([name])
+    }
+    
+    func relativeFolder(_ components: [String]) -> Folder {
+        fm.current.folder(components)
+    }
 }

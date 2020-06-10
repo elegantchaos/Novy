@@ -17,8 +17,8 @@ struct DuplicateCommand: НовыйCommand {
     }
     
     func run() throws {
-        let template = engine.fm.current.folder([self.template])
-        let destination = engine.fm.current.folder([self.destination])
+        let template = engine.template(named: self.template)
+        let destination = engine.relativeFolder([self.destination])
         
         let now = Date()
         let shortDate = DateFormatter.localizedString(from: now, dateStyle: .short, timeStyle: .none)
