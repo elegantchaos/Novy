@@ -101,6 +101,7 @@ Some example templates can be found in my github repo:
 - [elegantchaos/template-CatalystApp](https://github.com/elegantchaos/template-CatalystApp)
 - [elegantchaos/template-SwiftFile](https://github.com/elegantchaos/template-SwiftFile)
 - [elegantchaos/template-GitIgnore](https://github.com/elegantchaos/template-GitIgnore)
+- [elegantchaos/template-SwiftLibrary](https://github.com/elegantchaos/template-SwiftLibrary)
 
 I'll add more over time.
 

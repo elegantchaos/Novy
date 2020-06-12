@@ -44,7 +44,7 @@ class НовыйEngine: CommandEngine {
     }
     
     func `import`(project: Folder, into templates: Folder, as name: String, replacing: String) throws {
-        output.log("Importing \(project) as \(name).")
+        output.log("Importing \(project.name) as \(name).")
 
         var substitutions = Substitutions.forProject(named: replacing).switched()
         substitutions[.patternString(#"//  Created by (.*) on (.*)\."#)] = "//  Created by \(String.userKey.subtitutionQuoted) on \(String.dateKey.subtitutionQuoted)."
@@ -52,9 +52,11 @@ class НовыйEngine: CommandEngine {
         substitutions[.patternString(#"#  Created by (.*) on (.*)\."#)] = "//  Created by \(String.userKey.subtitutionQuoted) on \(String.dateKey.subtitutionQuoted)."
         substitutions[.patternString(#"#  All code \(c\) \d+ - present day, .*\."#)] = "#  All code (c) \(String.yearKey.subtitutionQuoted) - present day, \(String.ownerKey.subtitutionQuoted)."
 
-        let copied = try project.copy(to: templates, replacing: true)
-        try expandNames(in: copied, with: substitutions)
+        let destination = templates.folder(name)
+        try destination.create()
+        let copied = try project.copy(to: destination, replacing: true)
         try expandTextFiles(in: copied, with: substitutions)
+        try expandNames(in: copied, with: substitutions)
         try copied.rename(as: ItemName(name), replacing: true)
     }
 
