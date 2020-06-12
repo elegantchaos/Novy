@@ -54,7 +54,7 @@ To install a template, you can do `novy install my/repo`. This will fetch the te
 
 You can see which templates you've got installed with `novy list`. 
 
-To use a template, you do `novy clone my-template`.
+To use a template, you do `novy clone my-template <name>` (where `<name>` is the name you want the template to expand with).
 
 ## Templates
 
@@ -71,6 +71,8 @@ After cloning, if a file called `.novy` exists in the root of the template, it i
 **This is obviously dangerous!** You need to be able to trust any template you download from github. Not only could the script do something malicious, but a mistake in it could cause havoc with your machine. Please be aware that you use Новый at your own risk and _I take absolutely no responsibility for any damage it causes_. 
 
 I might switch this out for a more constrained mechanism later, but for now the flexibility is useful.
+
+If you want to edit a template in place, you can reveal it in the Finder with `novy reveal <template>`.
 
 ### Substitutions
 
