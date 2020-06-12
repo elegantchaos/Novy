@@ -35,7 +35,7 @@ An aside on the name. It means "new" in Russian. I picked it partly because I li
 
 A rough English pronounciation would be "novvy". 
 
-I'm not a Russian speaker[^1], so the cyrillic keyboard isn't normally configured for me. Thus I've called the executable `novy` (just the one v!). 
+I'm not a Russian speaker[1](#footnote-1), so the cyrillic keyboard isn't normally configured for me. Thus I've called the executable `novy` (just the one v!). 
 
 Feel free to rename it back to Новый locally if you can type it easily :)
 
@@ -117,4 +117,5 @@ That said, I'm interested to hear about other things that are out there. I'd als
 
 ---
 
-[^1]: I spend a couple of years studying it at school, mostly because it was an extra option that got me out of sport and religious education :). I really liked the language, but didn't apply myself properly and anyway was far too much of an introvert to speak it properly. I would love to learn it properly one day, but that is true of a whole ton of other things (including learning Scottish Gaelic, which is spoken where I live). 
+#### 1
+I spend a couple of years studying it at school, mostly because it was an extra option that got me out of sport and religious education :). I really liked the language, but didn't apply myself properly and anyway was far too much of an introvert to speak it properly. I would love to learn it properly one day, but that is true of a whole ton of other things (including learning Scottish Gaelic, which is spoken where I live). 
