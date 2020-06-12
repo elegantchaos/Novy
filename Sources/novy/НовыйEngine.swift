@@ -56,47 +56,57 @@ class НовыйEngine: CommandEngine {
         try copied.rename(as: ItemName(name), replacing: true)
     }
 
-    func clone(template: Folder, into destination: Folder, as name: String, variables: Variables) throws -> Folder {
+    func clone(template: Folder, into destination: Folder, as name: String, variables: Variables) throws {
         output.log("Cloning from \(template) into \(destination).")
 
         var substitutions = Substitutions.forProject(named: "Example")
         for (key,value) in variables {
             substitutions[.quotedString(key)] = value
         }
+        substitutions[.quotedString("name")] = name
 
-        let expanded = try template.copy(to: destination)
-        try expandNames(in: expanded, with: substitutions)
-        try expandTextFiles(in: expanded, with: substitutions)
+        let skipList = [".novy", ".git"]
+        var expanded: [ThrowingCommon] = []
+        try template.forEach(recursive: false) { item in
+            if !skipList.contains(item.name.fullName) {
+                let copied = try item.copy(to: destination)
+                expanded.append(copied)
+            }
+        }
         
-        let result = try expanded.rename(as: ItemName(name), replacing: true)
-        
-        return result
+        for item in expanded {
+        try expandNames(in: item, with: substitutions)
+        try expandTextFiles(in: item, with: substitutions)
+        }
     }
 
-    func expandNames(in folder: Folder, with substitutions: Substitutions) throws {
-        try folder.forEach(order: .foldersFirst, recursive: true) { item in
-            if item.name.name == ".git" {
-                verbose.log("Removed \(item).")
-                try item.delete()
-            } else {
-                let expandedName = item.name.name.applying(substitutions: substitutions)
-                let newName = item.name.renamed(as: expandedName)
-                if newName != item.name {
-                    verbose.log("Renamed \(item.name) as \(newName).")
-                    try item.rename(as: newName, replacing: false)
-                }
+    func expandNames(in item: ThrowingCommon, with substitutions: Substitutions) throws {
+        let expandedName = item.name.name.applying(substitutions: substitutions)
+        let newName = item.name.renamed(as: expandedName)
+        if newName != item.name {
+            verbose.log("Renamed \(item.name) as \(newName).")
+            try item.rename(as: newName, replacing: false)
+        }
+
+        if let folder = item as? Folder {
+            try folder.forEach(order: .foldersFirst, recursive: true) { item in
+                try expandNames(in: item, with: substitutions)
             }
         }
     }
     
-    func expandTextFiles(in folder: Folder, with substitutions: Substitutions) throws {
-        try folder.forEach(filter: .files, recursive: true) { item in
-            if let file = item as? File, let text = file.asText {
-                let processed = text.applying(substitutions: substitutions)
-                if processed != text {
-                    verbose.log("Substituted \(item.name)")
-                    file.write(as: processed)
-                }
+    func expandTextFiles(in item: ThrowingCommon, with substitutions: Substitutions) throws {
+        if let file = item as? File, let text = file.asText {
+            let processed = text.applying(substitutions: substitutions)
+            if processed != text {
+                verbose.log("Substituted \(item.name)")
+                file.write(as: processed)
+            }
+        }
+
+        if let folder = item as? Folder {
+            try folder.forEach(filter: .files, recursive: true) { item in
+                try expandTextFiles(in: item, with: substitutions)
             }
         }
     }

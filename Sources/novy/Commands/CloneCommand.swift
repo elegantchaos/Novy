@@ -31,17 +31,17 @@ struct CloneCommand: НовыйCommand {
         try destination.create()
 
         let variables: Variables = [
-            .userKey: NSFullUserName(),
-            .ownerKey: UserDefaults.standard.string(forKey: "Owner") ?? "", // currently set with: `defaults write novy Owner "Elegant Chaos"`
+            .userKey: UserDefaults.standard.string(forKey: "User") ?? NSFullUserName(), // set with: `defaults write novy User "Sam Deane"`
+            .ownerKey: UserDefaults.standard.string(forKey: "Owner") ?? NSFullUserName(), // set with: `defaults write novy Owner "Elegant Chaos"`
             .dateKey: shortDate,
             .yearKey: year,
         ]
 
-        let cloned = try engine.clone(template: template, into: destination, as: "Example", variables: variables)
+        try engine.clone(template: template, into: destination.up, as: destination.name.name, variables: variables)
         
-        let commands = cloned.file(".novy")
+        let commands = template.file(".novy")
         if commands.exists {
-            let runner = Runner(for: commands.url, cwd: cloned.url)
+            let runner = Runner(for: commands.url, cwd: engine.fm.locations.current.url)
             let result = try runner.sync(arguments: [], stdoutMode: .passthrough, stderrMode: .passthrough)
             if result.status != 0 {
                 engine.output.log("The .novy commands file returned a non-zero status.")
