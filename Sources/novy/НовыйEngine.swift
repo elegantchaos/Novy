@@ -69,14 +69,14 @@ class НовыйEngine: CommandEngine {
         var expanded: [ThrowingCommon] = []
         try template.forEach(recursive: false) { item in
             if !skipList.contains(item.name.fullName) {
-                let copied = try item.copy(to: destination)
+                let copied = try item.copy(to: destination, replacing: true)
                 expanded.append(copied)
             }
         }
         
         for item in expanded {
-            try expandNames(in: item, with: substitutions)
             try expandTextFiles(in: item, with: substitutions)
+            try expandNames(in: item, with: substitutions)
         }
     }
 
