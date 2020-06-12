@@ -31,8 +31,8 @@ struct CloneCommand: НовыйCommand {
         try destination.create()
 
         let variables: Variables = [
-            .userKey: "Sam Deane",
-            .ownerKey: "Elegant Chaos",
+            .userKey: NSFullUserName(),
+            .ownerKey: UserDefaults.standard.string(forKey: "Owner") ?? "", // currently set with: `defaults write novy Owner "Elegant Chaos"`
             .dateKey: shortDate,
             .yearKey: year,
         ]

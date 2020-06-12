@@ -79,12 +79,12 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "duplicate CatalystApp Output2"
-            isEnabled = "NO">
+            argument = "clone CatalystApp Output2"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "install elegantchaos/template-CatalystApp"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>
