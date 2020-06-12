@@ -48,8 +48,10 @@ class НовыйEngine: CommandEngine {
 
         var substitutions = Substitutions.forProject(named: replacing).switched()
         substitutions[.patternString(#"//  Created by (.*) on (.*)\."#)] = "//  Created by \(String.userKey.subtitutionQuoted) on \(String.dateKey.subtitutionQuoted)."
-        substitutions[.patternString(#"//  All code \(c\) \d+ - present day, .*\."#)] = "//  All code (c) \(String.yearKey.subtitutionQuoted) - present day, \(String.ownerKey.subtitutionQuoted)."
-        
+        substitutions[.patternString(#"//  All code \(c\) \d+ - present day, .*\."#)] = "#  All code (c) \(String.yearKey.subtitutionQuoted) - present day, \(String.ownerKey.subtitutionQuoted)."
+        substitutions[.patternString(#"#  Created by (.*) on (.*)\."#)] = "//  Created by \(String.userKey.subtitutionQuoted) on \(String.dateKey.subtitutionQuoted)."
+        substitutions[.patternString(#"#  All code \(c\) \d+ - present day, .*\."#)] = "#  All code (c) \(String.yearKey.subtitutionQuoted) - present day, \(String.ownerKey.subtitutionQuoted)."
+
         let copied = try project.copy(to: templates, replacing: true)
         try expandNames(in: copied, with: substitutions)
         try expandTextFiles(in: copied, with: substitutions)
