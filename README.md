@@ -31,9 +31,11 @@ That is what Новый is for.
 
 ### The Name
 
-An aside on the name. It means "new" in Russian. I picked it partly because I like Russian, partly in homage to Neu (which was a bastardised version of the German word for "new". A rough English pronounciation would be "novvy". 
+An aside on the name. It means "new" in Russian. I picked it partly because I like Russian, partly in homage to Neu (which is German for "new"). 
 
-I'm not a native Russian speaker, so the cyrillic keyboard isn't normally configured for me. Thus I've called the executable `novy` (just the one v!). 
+A rough English pronounciation would be "novvy". 
+
+I'm not a Russian speaker[1], so the cyrillic keyboard isn't normally configured for me. Thus I've called the executable `novy` (just the one v!). 
 
 Feel free to rename it back to Новый locally if you can type it easily :)
 
@@ -112,3 +114,7 @@ Like most of my projects at the moment, this was created for my own use, and par
 As such, it's not full-featured, and there may well be mature things out there that do a better job. I'm frankly not that bothered. I will probably continue to develop Новый for my own use, just because. 
 
 That said, I'm interested to hear about other things that are out there. I'd also be delighted to discover that other people want to use Новый. Please submit requests, bug reports, or even pull requests. Or not...
+
+---
+
+[1]: I spend a couple of years studying it at school, mostly because it was an extra option that got me out of sport and religious education :). I really liked the language, but didn't apply myself properly and anyway was far too much of an introvert to speak it properly. I would love to learn it properly one day, but that is true of a whole ton of other things (including learning Scottish Gaelic, which is spoken where I live). 
