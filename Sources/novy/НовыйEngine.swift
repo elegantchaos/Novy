@@ -59,13 +59,13 @@ class НовыйEngine: CommandEngine {
     func clone(template: Folder, into destination: Folder, as name: String, variables: Variables) throws {
         output.log("Cloning from \(template) into \(destination).")
 
-        var substitutions = Substitutions.forProject(named: "Example")
+        var substitutions = Substitutions.forProject(named: name)
         for (key,value) in variables {
             substitutions[.quotedString(key)] = value
         }
         substitutions[.quotedString("name")] = name
 
-        let skipList = [".novy", ".git"]
+        let skipList = [".novy", ".git", ".DS_Store"]
         var expanded: [ThrowingCommon] = []
         try template.forEach(recursive: false) { item in
             if !skipList.contains(item.name.fullName) {
@@ -75,23 +75,23 @@ class НовыйEngine: CommandEngine {
         }
         
         for item in expanded {
-        try expandNames(in: item, with: substitutions)
-        try expandTextFiles(in: item, with: substitutions)
+            try expandNames(in: item, with: substitutions)
+            try expandTextFiles(in: item, with: substitutions)
         }
     }
 
     func expandNames(in item: ThrowingCommon, with substitutions: Substitutions) throws {
+        if let folder = item as? Folder {
+            try folder.forEach(order: .foldersFirst, recursive: false) { item in
+                try expandNames(in: item, with: substitutions)
+            }
+        }
+        
         let expandedName = item.name.name.applying(substitutions: substitutions)
         let newName = item.name.renamed(as: expandedName)
         if newName != item.name {
             verbose.log("Renamed \(item.name) as \(newName).")
             try item.rename(as: newName, replacing: false)
-        }
-
-        if let folder = item as? Folder {
-            try folder.forEach(order: .foldersFirst, recursive: true) { item in
-                try expandNames(in: item, with: substitutions)
-            }
         }
     }
     
@@ -102,10 +102,8 @@ class НовыйEngine: CommandEngine {
                 verbose.log("Substituted \(item.name)")
                 file.write(as: processed)
             }
-        }
-
-        if let folder = item as? Folder {
-            try folder.forEach(filter: .files, recursive: true) { item in
+        } else if let folder = item as? Folder {
+            try folder.forEach(filter: .files, recursive: false) { item in
                 try expandTextFiles(in: item, with: substitutions)
             }
         }

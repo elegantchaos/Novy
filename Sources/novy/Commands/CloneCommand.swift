@@ -27,9 +27,7 @@ struct CloneCommand: НовыйCommand {
         formatter.dateFormat = "YYYY"
         let year = formatter.string(from: now)
 
-        try? destination.delete()
-        try destination.create()
-
+        try destination.up.create()
         let variables: Variables = [
             .userKey: UserDefaults.standard.string(forKey: "User") ?? NSFullUserName(), // set with: `defaults write novy User "Sam Deane"`
             .ownerKey: UserDefaults.standard.string(forKey: "Owner") ?? NSFullUserName(), // set with: `defaults write novy Owner "Elegant Chaos"`

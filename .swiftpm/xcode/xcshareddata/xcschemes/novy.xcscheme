@@ -79,7 +79,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "clone CatalystApp Output2"
+            argument = "clone CatalystApp Output/Test"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
