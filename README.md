@@ -98,8 +98,9 @@ Again, these values are currently hard coded for my needs. I'd be happy to try t
 
 Some example templates can be found in my github repo:
 
-- elegantchaos/template-CatalystApp
-- elegantchaos/template-SwiftFile
+- [elegantchaos/template-CatalystApp](https://github.com/elegantchaos/template-CatalystApp)
+- [elegantchaos/template-SwiftFile](https://github.com/elegantchaos/template-SwiftFile)
+- [elegantchaos/template-GitIgnore](https://github.com/elegantchaos/template-GitIgnore)
 
 I'll add more over time.
 

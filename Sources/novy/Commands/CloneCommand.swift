@@ -9,17 +9,29 @@ import Foundation
 import Runner
 
 struct CloneCommand: НовыйCommand {
-    @Argument() var template: String
-    @Argument() var destination: String
+    @Argument(help: "The name of the template to clone.") var template: String
+    @Argument(help: "The location to use when expanding the template. Defaults to the working directory.") var destination: String?
     @OptionGroup() var common: CommandShellOptions
 
     static public var configuration: CommandConfiguration {
-        CommandConfiguration(commandName: "clone", abstract: "Create a new item from a template.")
+        CommandConfiguration(
+            commandName: "clone",
+            abstract: "Create a new item from a template.",
+            discussion: """
+                The template is expanded into the supplied destination, which is relative
+                to the working directory. If no destination is supplied, the current working
+                directory is used.
+
+                Some templates require a name to use in their expansions. If the destination is
+                supplied, the last part of it is used as the name. If not, the template name is
+                used.
+                """
+        )
     }
     
     func run() throws {
         let template = engine.template(named: self.template)
-        let destination = engine.relativeFolder([self.destination])
+        let destination = engine.relativeFolder([self.destination ?? self.template])
         
         let now = Date()
         let shortDate = DateFormatter.localizedString(from: now, dateStyle: .short, timeStyle: .none)
