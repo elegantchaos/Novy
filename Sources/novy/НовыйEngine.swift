@@ -107,7 +107,7 @@ class НовыйEngine: CommandEngine {
                 file.write(as: processed)
             }
         } else if let folder = item as? Folder {
-            try folder.forEach(filter: .files, recursive: false) { item in
+            try folder.forEach(recursive: false) { item in
                 try expandTextFiles(in: item, with: substitutions)
             }
         }
