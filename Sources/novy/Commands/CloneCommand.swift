@@ -27,7 +27,8 @@ struct CloneCommand: НовыйCommand {
         formatter.dateFormat = "YYYY"
         let year = formatter.string(from: now)
 
-        try destination.up.create()
+        let container = destination.up
+        try container.create()
         let variables: Variables = [
             .userKey: UserDefaults.standard.string(forKey: "User") ?? NSFullUserName(), // set with: `defaults write novy User "Sam Deane"`
             .ownerKey: UserDefaults.standard.string(forKey: "Owner") ?? NSFullUserName(), // set with: `defaults write novy Owner "Elegant Chaos"`
@@ -35,12 +36,13 @@ struct CloneCommand: НовыйCommand {
             .yearKey: year,
         ]
 
-        try engine.clone(template: template, into: destination.up, as: destination.name.name, variables: variables)
+        let name = destination.name.name
+        try engine.clone(template: template, into: destination.up, as: name, variables: variables)
         
         let commands = template.file(".novy")
         if commands.exists {
-            let runner = Runner(for: commands.url, cwd: engine.fm.locations.current.url)
-            let result = try runner.sync(arguments: [], stdoutMode: .passthrough, stderrMode: .passthrough)
+            let runner = Runner(for: commands.url, cwd: container.url)
+            let result = try runner.sync(arguments: [name, template.path, destination.path], stdoutMode: .passthrough, stderrMode: .passthrough)
             if result.status != 0 {
                 engine.output.log("The .novy commands file returned a non-zero status.")
                 throw ArgumentParser.ExitCode(result.status)
