@@ -21,27 +21,30 @@
 
 Новый is the spiritual successor to an old product of mine, [Neu](https://elegantchaos.com/neu/).
 
-Neu existed to make it easy to create new files in the Finder, using a right-click contextual menu. I've always been a Mac user primarily, but it filled in a tiny gap for me where I thought that Windows worked better. It had some templating abilities which meant that you could create new files that had some value pre-filled.
+Neu originally existed to make it easy to create new files in the Finder, using a right-click contextual menu. I've always been a Mac user primarily, but it filled in a tiny gap for me where I thought that Windows worked better. I retired it a while back, when I started working on Sketch, as I didn't have time to maintain it. 
 
-I retired that app a while back, when I started working on Sketch, as I didn't have time to maintain it.
+Although a desktop app, as Neu it developed, I added some templating abilities which meant that you could create new files that had some values pre-filled. Before I canned it, I was thinking of making a companion command-line tool.
 
-For a while now though I've been wishing I had something similar, although my main use case now is actually from the command line. I want to be able to make new files (or groups of files) easily, from a template. I want certain values to be filled in dynamically. I want an arbitrary script to run as part of the setup process, so that other things can happen (for example, a git repo can be created, or git-submodules can be installed and fetched).
+For a while now though I've been wishing I had something like the Neu command line tool that I never got round to. I want to be able to make new files (or groups of files) easily, from a template. I want certain values to be filled in dynamically. I want an arbitrary script to run as part of the setup process, so that other things can happen (for example, a git repo can be created, or git-submodules can be installed and fetched).
 
-That is what Новый is for.
+That is what Новый is for. 
+
+### The Name
+
+An aside on the name. It means "new" in Russian. I picked it partly because I like Russian, partly in homage to Neu (which was a bastardised version of the German word for "new". A rough English pronounciation would be "novvy". 
+
+I'm not a native Russian speaker, so the cyrillic keyboard isn't normally configured for me. Thus I've called the executable `novy` (just the one v!). 
+
+Feel free to rename it back to Новый locally if you can type it easily :)
 
 ## Installation
 
-For now, you need to clone it, build it, and copy the built executable yourself.
+One day it may become a full application like Neu, but for now it's a command line tool, and you need to clone it, build it, and copy the built executable yourself.
 
     git clone git@github.com:elegantchaos/novy.git
     swift build --configuration release
     cp .build/release/novy /usr/local/bin/ # or some other location where you put executables
 
-### Pronounciation
-
-An aside on the name. It means "new" in Russian. I picked it partly because I like Russian, partly in homage to Neu (which was a sort of bastardised version of the German word for "new". A rough English pronounciation would be "novvy". 
-
-I'm a native English speaker, so the cyrillic keyboard isn't normally accessible to me. Thus I've called the executable `novy` (just the one v there). Feel free to rename it back to Новый locally if you can type it easily :)
 
 ## Usage
 
@@ -81,5 +84,17 @@ With complicated templates (such as Xcode projects), it is useful to be able to 
 
 This was annoying, so I've chosen to use placeholder delimiters which are just ascii text: `xXx`. If your variable is called `foo`, the placeholder will be `xXxfooxXx`.  Whilst this is a little hard to read, it has the advantage of working everywhere that text works. XML or JSON that includes placeholders will still parse. Source code that includes placeholders will generally still compile. I think this is worth having.
 
+### Importing
+
+To make it easy to create templates from Xcode projects, I added the `novy import` command, which does a kind of clone in reverse. It performs some backwards substitutions, based on regular expressions, to strip out some things like the author/date/copyright in source files, and replace them with placeholders.
+
+Again, these values are currently hard coded for my needs. I'd be happy to try to generalise this system for everyone, but I may need the motivation of someone asking me to do it :)
 
 
+## Future
+
+Like most of my projects at the moment, this was created for my own use, and partly as a vehicle to drive my own experimentation and learning with Swift.
+
+As such, it's not full-featured, and there may well be mature things out there that do a better job. I'm frankly not that bothered. I will probably continue to develop Новый for my own use, just because. 
+
+That said, I'm interested to hear about other things that are out there. I'd also be delighted to discover that other people want to use Новый. Please submit requests, bug reports, or even pull requests. Or not...
