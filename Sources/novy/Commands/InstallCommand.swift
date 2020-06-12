@@ -29,7 +29,7 @@ struct InstallCommand: НовыйCommand {
         let cloned = engine.templates.folder(ItemName(name))
         if let range = name.range(of: "template-"), range.lowerBound == name.startIndex {
             name.removeSubrange(range)
-            cloned.rename(as: name)
+            try cloned.rename(as: name)
         }
         
         engine.output.log("Done.\n")

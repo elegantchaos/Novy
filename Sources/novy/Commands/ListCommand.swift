@@ -14,7 +14,7 @@ struct ListCommand: НовыйCommand {
     }
     
     func run() throws {
-        engine.templates.forEach(filter: .folders, recursive: false) { item in
+        try engine.templates.forEach(filter: .folders, recursive: false) { item in
             engine.output.log(item.name.name)
         }
     }

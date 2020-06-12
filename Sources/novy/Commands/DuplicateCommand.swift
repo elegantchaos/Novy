@@ -27,8 +27,8 @@ struct DuplicateCommand: НовыйCommand {
         formatter.dateFormat = "YYYY"
         let year = formatter.string(from: now)
 
-        destination.delete()
-        destination.create()
+        try? destination.delete()
+        try destination.create()
 
         let variables: Variables = [
             .userKey: "Sam Deane",
@@ -37,7 +37,7 @@ struct DuplicateCommand: НовыйCommand {
             .yearKey: year,
         ]
 
-        let cloned = engine.clone(template: template, into: destination, as: "Example", variables: variables)
+        let cloned = try engine.clone(template: template, into: destination, as: "Example", variables: variables)
         
         let commands = cloned.file(".novy")
         if commands.exists {

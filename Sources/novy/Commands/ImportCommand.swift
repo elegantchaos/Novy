@@ -17,11 +17,11 @@ struct ImportCommand: НовыйCommand {
     }
     
     func run() throws {
-        let from = engine.fm.current.folder([self.from])
+        let from = engine.fm.locations.current.folder([self.from])
         let originalName = from.name.name
         let name = self.name ?? originalName
         let replacing = self.replacing ?? originalName
-        engine.import(project: from, into: engine.templates, as: name, replacing: replacing)
+        try engine.import(project: from, into: engine.templates, as: name, replacing: replacing)
         engine.output.log("Done.\n")
     }
 }
