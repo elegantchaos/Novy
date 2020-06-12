@@ -15,6 +15,25 @@
 
 [comment]: <> (End of ActionStatus Header)
 
-# novy
+# Новый
 
-A description of this package.
+(_adj_. new, fresh, novel)
+
+Новый is the spiritual successor to an old product of mine, [Neu](https://elegantchaos.com/neu/).
+
+Neu existed to make it easy to create new files in the Finder, using a right-click contextual menu. I've always been a Mac user primarily, but it filled in a tiny gap for me where I thought that Windows worked better. It had some templating abilities which meant that you could create new files that had some value pre-filled.
+
+I retired that app a while back, when I started working on Sketch, as I didn't have time to maintain it.
+
+For a while now though I've been wishing I had something similar, although my main use case now is actually from the command line. I want to be able to make new files (or groups of files) easily, from a template. I want certain values to be filled in dynamically. I want an arbitrary script to run as part of the setup process, so that other things can happen (for example, a git repo can be created, or git-submodules can be installed and fetched).
+
+That is what Новый is for.
+
+## Installation
+
+For now, you need to clone it, build it, and copy the built executable yourself.
+
+    git clone git@github.com:elegantchaos/novy.git
+    swift build --configuration release
+    cp .build/release/novy /usr/local/bin/ # or some other location where you put executables
+

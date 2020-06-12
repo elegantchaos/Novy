@@ -2,12 +2,21 @@
   "object": {
     "pins": [
       {
+        "package": "CommandShell",
+        "repositoryURL": "https://github.com/elegantchaos/CommandShell.git",
+        "state": {
+          "branch": null,
+          "revision": "ddb15e9dc973fbc25409a7c1d3933ae406a40690",
+          "version": "2.1.2"
+        }
+      },
+      {
         "package": "Expressions",
         "repositoryURL": "https://github.com/elegantchaos/Expressions.git",
         "state": {
           "branch": null,
-          "revision": "d821e7c75e31fddb8158d8dac578a6ba200c9f36",
-          "version": "1.0.0"
+          "revision": "3f1a4caccb9e33d95d0650e9b78350acd3576300",
+          "version": "1.1.1"
         }
       },
       {
@@ -15,8 +24,53 @@
         "repositoryURL": "https://github.com/elegantchaos/Files.git",
         "state": {
           "branch": null,
-          "revision": "fb3252dc942744566af0e63c1a1e8697f821dda6",
-          "version": "1.0.5"
+          "revision": "54fb8c501a27a295970c67e60c269e97154adf52",
+          "version": "1.1.1"
+        }
+      },
+      {
+        "package": "Logger",
+        "repositoryURL": "https://github.com/elegantchaos/Logger.git",
+        "state": {
+          "branch": null,
+          "revision": "e8a0dea5e826a6b3f7d020bd113247274991fb97",
+          "version": "1.5.5"
+        }
+      },
+      {
+        "package": "Runner",
+        "repositoryURL": "https://github.com/elegantchaos/Runner.git",
+        "state": {
+          "branch": null,
+          "revision": "db79e08a53d822156221dc2614970b9dfe1301f5",
+          "version": "1.3.0"
+        }
+      },
+      {
+        "package": "SemanticVersion",
+        "repositoryURL": "https://github.com/elegantchaos/SemanticVersion.git",
+        "state": {
+          "branch": null,
+          "revision": "6bda5a45a2f687a82a0fbb002bee8ad31e44f478",
+          "version": "1.1.0"
+        }
+      },
+      {
+        "package": "swift-argument-parser",
+        "repositoryURL": "https://github.com/apple/swift-argument-parser",
+        "state": {
+          "branch": null,
+          "revision": "3d79b2b5a2e5af52c14e462044702ea7728f5770",
+          "version": "0.1.0"
+        }
+      },
+      {
+        "package": "XCTestExtensions",
+        "repositoryURL": "https://github.com/elegantchaos/XCTestExtensions.git",
+        "state": {
+          "branch": null,
+          "revision": "15991478b5c9bda527a0a59567ad0fa26940f74c",
+          "version": "1.1.2"
         }
       }
     ]

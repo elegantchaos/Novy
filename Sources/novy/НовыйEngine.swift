@@ -27,7 +27,7 @@ class НовыйEngine: CommandEngine {
     
     override class var subcommands: [ParsableCommand.Type] {
         [
-            DuplicateCommand.self,
+            CloneCommand.self,
             ImportCommand.self,
             InstallCommand.self,
             ListCommand.self,

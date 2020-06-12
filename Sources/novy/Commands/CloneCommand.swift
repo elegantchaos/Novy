@@ -8,13 +8,13 @@ import CommandShell
 import Foundation
 import Runner
 
-struct DuplicateCommand: НовыйCommand {
+struct CloneCommand: НовыйCommand {
     @Argument() var template: String
     @Argument() var destination: String
     @OptionGroup() var common: CommandShellOptions
 
     static public var configuration: CommandConfiguration {
-        CommandConfiguration(commandName: "duplicate", abstract: "Create a new item from a template.")
+        CommandConfiguration(commandName: "clone", abstract: "Create a new item from a template.")
     }
     
     func run() throws {
