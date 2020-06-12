@@ -118,8 +118,8 @@ That said, I'm interested to hear about other things that are out there. I'd als
 ---
 
 #### Footnote
-I spend a couple of years studying Russian at school. If I'm honest, this was mostly because it was an extra option that got me out of sport and religious education :). 
+I spend a couple of years studying Russian at school. If I'm honest, this was mostly because it was an extra option that got me out of sport and religious education... 
 
-I really liked the language though, but didn't apply myself properly. I was doing too many other subjects, and my French teacher was way scarier than my Russian one. Anyway was (and still am) far too much of an introvert to actually speak it to other people...
+I really liked the language, but didn't apply myself properly. I was doing too many other subjects, and my French teacher was way scarier than my Russian one, so I did her homework and skipped the Russian. Weirdly, my Russian teacher was also my Latin teacher. Even more weirdly, my Latin/Russian teacher left halfway through the course, and my (inner-city, state) school managed to replace him with another Russian/Latin teacher. What are the chances?
 
-I would love to learn it properly one day, but that is true of a whole ton of other things (including learning Scottish Gaelic, which is spoken where I live).
+I would love to learn it properly one day, but that is true of a whole ton of other things (including learning Scottish Gaelic, which is spoken where I live). Anyway I was (and still am) far too much of an introvert to actually speak it to other people. 
