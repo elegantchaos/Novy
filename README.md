@@ -68,7 +68,9 @@ When a template is cloned, substitutions can be applied to the file names (see b
 
 After cloning, if a file called `.novy` exists in the root of the template, it is executed. Typically the idea here is that it is a shell script, which performs additional setup steps. 
 
-**This is obviously dangerous!** You need to be able to trust any template you download from github. I might switch this out for a more constrained mechanism later, but for now the flexibility is useful.
+**This is obviously dangerous!** You need to be able to trust any template you download from github. Not only could the script do something malicious, but a mistake in it could cause havoc with your machine. Please be aware that you use Новый at your own risk and _I take absolutely no responsibility for any damage it causes_. 
+
+I might switch this out for a more constrained mechanism later, but for now the flexibility is useful.
 
 ### Substitutions
 
@@ -90,6 +92,14 @@ To make it easy to create templates from Xcode projects, I added the `novy impor
 
 Again, these values are currently hard coded for my needs. I'd be happy to try to generalise this system for everyone, but I may need the motivation of someone asking me to do it :)
 
+### Examples
+
+Some example templates can be found in my github repo:
+
+- elegantchaos/template-CatalystApp
+- elegantchaos/template-SwiftFile
+
+I'll add more over time.
 
 ## Future
 
