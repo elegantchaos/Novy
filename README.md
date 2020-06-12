@@ -35,7 +35,7 @@ An aside on the name. It means "new" in Russian. I picked it partly because I li
 
 A rough English pronounciation would be "novvy". 
 
-I'm not a Russian speaker[1](#footnote-1), so the cyrillic keyboard isn't normally configured for me. Thus I've called the executable `novy` (just the one v!). 
+I'm not a Russian speaker[1](#1), so the cyrillic keyboard isn't normally configured for me. Thus I've called the executable `novy` (just the one v!). 
 
 Feel free to rename it back to Новый locally if you can type it easily :)
 
