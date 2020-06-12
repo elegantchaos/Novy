@@ -1,6 +1,0 @@
-[submodule "Extras/Examples/ActionStatus/Dependencies/ReleaseTools"]
-	path = Extras/Examples/ActionStatus/Dependencies/ReleaseTools
-	url = git@github.com:elegantchaos/ReleaseTools.git
-[submodule "Dependencies/ReleaseTools"]
-	path = Dependencies/ReleaseTools
-	url = git@github.com:elegantchaos/ReleaseTools.git
