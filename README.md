@@ -37,3 +37,49 @@ For now, you need to clone it, build it, and copy the built executable yourself.
     swift build --configuration release
     cp .build/release/novy /usr/local/bin/ # or some other location where you put executables
 
+### Pronounciation
+
+An aside on the name. It means "new" in Russian. I picked it partly because I like Russian, partly in homage to Neu (which was a sort of bastardised version of the German word for "new". A rough English pronounciation would be "novvy". 
+
+I'm a native English speaker, so the cyrillic keyboard isn't normally accessible to me. Thus I've called the executable `novy` (just the one v there). Feel free to rename it back to Новый locally if you can type it easily :)
+
+## Usage
+
+Templates can live in github, but are cached locally.
+
+To install a template, you can do `novy install my/repo`. This will fetch the template from `https://github.com/my/repo.git`.
+
+You can see which templates you've got installed with `novy list`. 
+
+To use a template, you do `novy clone my-template`.
+
+## Templates
+
+The templates currently live in `~/.local/share/novy/templates`. 
+
+I use this path to maintain consistency across platforms. I might switch to using `~/Library` at some point on the Mac. I might also add the ability to store them in `/usr/share/` and/or `/Library` as well.
+
+They are basically just folders. 
+
+When a template is cloned, substitutions can be applied to the file names (see below for more information on substitutions). Substitutions are also applied to any file that successfully loads as utf8 text (regardless of file extensions).
+
+After cloning, if a file called `.novy` exists in the root of the template, it is executed. Typically the idea here is that it is a shell script, which performs additional setup steps. 
+
+**This is obviously dangerous!** You need to be able to trust any template you download from github. I might switch this out for a more constrained mechanism later, but for now the flexibility is useful.
+
+### Substitutions
+
+Templates can contain substitutions in their content, and their file names. 
+
+At the moment, the range of values is very limited, and some are even hard coded. This needs changing, which I will do if there's any interest.
+
+Normally, subtitution engines use some funky punctuation for their placeholders - such as `%%{ blah }%%` or `\(blah)`. 
+
+It makes sense to try to avoid something that could occur naturally, but it's usually a bit format sensitive. One placeholder format might work for XML files, but have a form that doesn't parse in JSON. Another might have the opposite problem.
+
+With complicated templates (such as Xcode projects), it is useful to be able to open the actual template, modify it, and save it again - so that the template itself can be improved over time. The original dellimiters that I tried broke the parsing of the XML that Xcode uses (for things like the `xcworkspacedata` files), meaning that Xcode wouldn't open the template. 
+
+This was annoying, so I've chosen to use placeholder delimiters which are just ascii text: `xXx`. If your variable is called `foo`, the placeholder will be `xXxfooxXx`.  Whilst this is a little hard to read, it has the advantage of working everywhere that text works. XML or JSON that includes placeholders will still parse. Source code that includes placeholders will generally still compile. I think this is worth having.
+
+
+
