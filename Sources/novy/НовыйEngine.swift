@@ -48,8 +48,8 @@ class НовыйEngine: CommandEngine {
 
         var substitutions = Substitutions.forProject(named: replacing).switched()
         substitutions[.patternString(#"//  Created by (.*) on (.*)\."#)] = "//  Created by \(String.userKey.subtitutionQuoted) on \(String.dateKey.subtitutionQuoted)."
-        substitutions[.patternString(#"//  All code \(c\) \d+ - present day, .*\."#)] = "#  All code (c) \(String.yearKey.subtitutionQuoted) - present day, \(String.ownerKey.subtitutionQuoted)."
-        substitutions[.patternString(#"#  Created by (.*) on (.*)\."#)] = "//  Created by \(String.userKey.subtitutionQuoted) on \(String.dateKey.subtitutionQuoted)."
+        substitutions[.patternString(#"//  All code \(c\) \d+ - present day, .*\."#)] = "//  All code (c) \(String.yearKey.subtitutionQuoted) - present day, \(String.ownerKey.subtitutionQuoted)."
+        substitutions[.patternString(#"#  Created by (.*) on (.*)\."#)] = "#  Created by \(String.userKey.subtitutionQuoted) on \(String.dateKey.subtitutionQuoted)."
         substitutions[.patternString(#"#  All code \(c\) \d+ - present day, .*\."#)] = "#  All code (c) \(String.yearKey.subtitutionQuoted) - present day, \(String.ownerKey.subtitutionQuoted)."
 
         let destination = templates.folder(name)
@@ -57,7 +57,6 @@ class НовыйEngine: CommandEngine {
         let copied = try project.copy(to: destination, replacing: true)
         try expandTextFiles(in: copied, with: substitutions)
         try expandNames(in: copied, with: substitutions)
-        try copied.rename(as: ItemName(name), replacing: true)
     }
 
     func clone(template: Folder, into destination: Folder, as name: String, variables: Variables) throws {
