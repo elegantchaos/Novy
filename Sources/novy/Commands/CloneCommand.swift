@@ -41,11 +41,11 @@ struct CloneCommand: НовыйCommand {
 
         let container = destination.up
         try container.create()
-        var variables: Variables = [
-            .userKey: UserDefaults.standard.string(forKey: "User") ?? NSFullUserName(), // set with: `defaults write novy User "Sam Deane"`
-            .ownerKey: UserDefaults.standard.string(forKey: "Owner") ?? NSFullUserName(), // set with: `defaults write novy Owner "Elegant Chaos"`
-            .dateKey: shortDate,
-            .yearKey: year,
+        var variables: Substitutions = [
+            .quotedString(.userKey): NSFullUserName(),
+            .quotedString(.ownerKey): NSFullUserName(),
+            .quotedString(.dateKey): shortDate,
+            .quotedString(.yearKey): year,
         ]
 
         // add extra substitutions from a .novy file if it exists
