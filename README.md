@@ -100,7 +100,7 @@ This file takes the form:
 }
 ```
 
-Note that only the `strings` section is implemented as of v1.0.2!
+[Note that the `functions` section is not implemented as of v1.0.3!]
 
 In addition to these values, four are supplied dynamically:
 

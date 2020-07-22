@@ -69,15 +69,23 @@ extension Substitutions {
 extension String {
     func applying(substitutions: Substitutions) -> String {
         var processed = self
-        for (key, value) in substitutions {
-            switch key {
-            case .string(let string):
-                processed = processed.replacingOccurrences(of: string, with: value)
-                
-            case .pattern(let pattern):
-                processed = pattern.substitute(in: processed) { _, _ in value }
+        for _ in 0..<1000 { // for safety, we will give up after 1000 iterations, just incase a combination of substitutions cause some sort of infinite loop
+            let current = processed
+            for (key, value) in substitutions {
+                switch key {
+                case .string(let string):
+                    processed = processed.replacingOccurrences(of: string, with: value)
+                    
+                case .pattern(let pattern):
+                    processed = pattern.substitute(in: processed) { _, _ in value }
+                }
+            }
+            if current == processed {
+                // nothing changed, so break out
+                break
             }
         }
+        
         return processed
     }
 }
