@@ -68,7 +68,9 @@ They are basically just folders.
 
 When a template is cloned, substitutions can be applied to the file names (see below for more information on substitutions). Substitutions are also applied to any file that successfully loads as utf8 text (regardless of file extensions).
 
-After cloning, if a file called `.novy` exists in the root of the template, it is executed. Typically the idea here is that it is a shell script, which performs additional setup steps. 
+### Post Processing
+
+After cloning, if a file called `.novy` exists in the root of the template, it is executed! Typically the idea here is that it is a shell script, which performs additional setup steps. 
 
 **This is obviously dangerous!** You need to be able to trust any template you download from github. Not only could the script do something malicious, but a mistake in it could cause havoc with your machine. Please be aware that you use Новый at your own risk and _I take absolutely no responsibility for any damage it causes_. 
 
@@ -112,9 +114,11 @@ Although it defaults to the user's name (so that it always has a value), it can 
 
 ### Placeholders
 
-Normally, subtitution engines use some funky punctuation for their placeholders - such as `%%{ blah }%%` or `\(blah)`. 
+Normally, substitution engines use some funky punctuation for their placeholders - such as `%%{blah }%%` or `\(blah)`. 
 
-It makes sense to try to avoid something that could occur naturally, but it's usually a bit format sensitive. One placeholder format might work for XML files, but have a form that doesn't parse in JSON. Another might have the opposite problem.
+The logic behind this is that it is an attempt to avoid something that could occur naturally in the template text.
+
+The problem with it as an approach is that it's usually a bit format-sensitive. One placeholder style might work for XML files, but contain characters that don't parse in JSON. Another might have the opposite problem.
 
 With complicated templates (such as Xcode projects), it is useful to be able to open the actual template, modify it, and save it again - so that the template itself can be improved over time. The original dellimiters that I tried broke the parsing of the XML that Xcode uses (for things like the `xcworkspacedata` files), meaning that Xcode wouldn't open the template. 
 
@@ -147,7 +151,9 @@ Like most of my projects at the moment, this was created for my own use, and par
 
 As such, it's not full-featured, and there may well be mature things out there that do a better job. I'm frankly not that bothered. I will probably continue to develop Новый for my own use, just because. 
 
-That said, I'm interested to hear about other things that are out there. I'd also be delighted to discover that other people want to use Новый. Please submit requests, bug reports, or even pull requests. Or not...
+That said, I'm interested to hear about other things that are out there. I'd also be delighted to discover that other people want to use Новый. Please submit requests, bug reports, or even pull requests. Or not.
+
+I do plan to make the substitution engine more dynamic.
 
 ---
 
