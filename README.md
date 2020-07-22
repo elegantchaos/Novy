@@ -80,7 +80,37 @@ If you want to edit a template in place, you can reveal it in the Finder with `n
 
 Templates can contain substitutions in their content, and their file names. 
 
-At the moment, the range of values is very limited, and some are even hard coded. This needs changing, which I will do if there's any interest.
+These are mostly read from  `~/.local/share/novy/settings.json`.
+
+This file takes the form: 
+
+```json
+{
+    "strings": {
+        "key": "value"
+    },
+    "expressions": {
+        "some.*expression": "value"
+    },
+    "functions": {
+        "key": "javascript expression"
+    }
+}
+```
+
+Note that only the `strings` section is implemented as of v1.0.2!
+
+In addition to these values, four are supplied dynamically:
+
+- `user`: the value returned by `NSFullUserName`
+- `owner`: also the value returned by `NSFullUserName` 
+- `date`: the date, in the form: `dd/mm/yyyy`
+- `year`: the year, in the form: `yyyy`
+
+The `owner` key is intended to contain an organization name - eg "Elegant Chaos" - for use in things like header comments. 
+Although it defaults to the user's name (so that it always has a value), it can be overriden by an entry in `settings.json`, as can all of the dynamic values.
+
+### Placeholders
 
 Normally, subtitution engines use some funky punctuation for their placeholders - such as `%%{ blah }%%` or `\(blah)`. 
 
@@ -88,7 +118,11 @@ It makes sense to try to avoid something that could occur naturally, but it's us
 
 With complicated templates (such as Xcode projects), it is useful to be able to open the actual template, modify it, and save it again - so that the template itself can be improved over time. The original dellimiters that I tried broke the parsing of the XML that Xcode uses (for things like the `xcworkspacedata` files), meaning that Xcode wouldn't open the template. 
 
-This was annoying, so I've chosen to use placeholder delimiters which are just ascii text: `xXx`. If your variable is called `foo`, the placeholder will be `xXxfooxXx`.  Whilst this is a little hard to read, it has the advantage of working everywhere that text works. XML or JSON that includes placeholders will still parse. Source code that includes placeholders will generally still compile. I think this is worth having.
+This was annoying, so I've chosen to use placeholder delimiters which are just ascii text: `xXx`. If your variable is called `foo`, the placeholder will be `xXxfooxXx`.  Whilst this is a little hard to read, it has the advantage of working everywhere that text works. It also generally doesn't break the naming rules for things like variable or function names in programming languages. 
+
+This means that XML or JSON that includes placeholders will still parse, and source code that includes placeholders will generally still compile. 
+
+I think this is worth having.
 
 ### Importing
 
