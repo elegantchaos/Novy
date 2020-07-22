@@ -39,6 +39,31 @@ class НовыйEngine: CommandEngine {
         return templates.folder([name])
     }
     
+    var substitutions: [String:String] {
+        // read extra substitutions from a .novy file if it exists
+        // TODO: expand this to read reg ex patterns and functions too
+        let settings = templates.up.file("settings.json")
+        if !settings.exists {
+            settings.write(as: """
+                {
+                    "strings" : {
+                    },
+                    "patterns" : {
+                    },
+                    "functions" : {
+                    }
+                }
+                """)
+        }
+        
+        guard let data = try? Data(contentsOf: settings.url),
+           let json = try? JSONSerialization.jsonObject(with: data, options: []),
+           let dictionary = json as? [String:Any],
+           let strings = dictionary["strings"] as? [String:String] else { return [:] }
+        
+        return strings
+    }
+
     func relativeFolder(_ components: [String]) -> Folder {
         fm.locations.current.folder(components)
     }
@@ -47,6 +72,7 @@ class НовыйEngine: CommandEngine {
         output.log("Importing \(project.name) as \(name).")
 
         var substitutions = Substitutions.forProject(named: replacing).switched()
+        // TODO: add the standard Apple templates here.
         substitutions[.patternString(#"//  Created by (.*) on (.*)\."#)] = "//  Created by \(String.userKey.subtitutionQuoted) on \(String.dateKey.subtitutionQuoted)."
         substitutions[.patternString(#"//  All code \(c\) \d+ - present day, .*\."#)] = "//  All code (c) \(String.yearKey.subtitutionQuoted) - present day, \(String.ownerKey.subtitutionQuoted)."
         substitutions[.patternString(#"#  Created by (.*) on (.*)\."#)] = "#  Created by \(String.userKey.subtitutionQuoted) on \(String.dateKey.subtitutionQuoted)."

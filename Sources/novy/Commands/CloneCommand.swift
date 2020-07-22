@@ -41,13 +41,18 @@ struct CloneCommand: НовыйCommand {
 
         let container = destination.up
         try container.create()
-        let variables: Variables = [
+        var variables: Variables = [
             .userKey: UserDefaults.standard.string(forKey: "User") ?? NSFullUserName(), // set with: `defaults write novy User "Sam Deane"`
             .ownerKey: UserDefaults.standard.string(forKey: "Owner") ?? NSFullUserName(), // set with: `defaults write novy Owner "Elegant Chaos"`
             .dateKey: shortDate,
             .yearKey: year,
         ]
 
+        // add extra substitutions from a .novy file if it exists
+        for (key, value) in engine.substitutions {
+            variables[key] = value
+        }
+        
         let name = destination.name.name
         try engine.clone(template: template, into: destination.up, as: name, variables: variables)
         
