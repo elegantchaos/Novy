@@ -12,6 +12,9 @@ let package = Package(
     platforms: [
         .macOS(.v10_13)
     ],
+    products: [
+        .executable(name: "novy", targets: ["novy"])
+    ],
     dependencies: [
          .package(url: "https://github.com/elegantchaos/CommandShell.git", from: "2.1.2"),
          .package(url: "https://github.com/elegantchaos/Expressions.git", from: "1.1.1"),
