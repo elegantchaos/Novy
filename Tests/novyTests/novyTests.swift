@@ -26,7 +26,7 @@ final class novyTests: XCTestCase {
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
         let output = String(data: data, encoding: .utf8)
 
-        XCTAssertEqual(output, "Hello, world!\n")
+        XCTAssertEqual(output, "OVERVIEW: Tool for creating new files and/or folders from templates.\n\nUSAGE: novy [--version] [--verbose] <subcommand>\n\nOPTIONS:\n  --version               Show the version. \n  --verbose               Enable additional logging. \n  -h, --help              Show help information.\n\nSUBCOMMANDS:\n  clone                   Create a new item from a template.\n  import                  Import a project as a template.\n  install                 Install a template from github.\n  list                    List the available templates.\n  reveal                  Reveal a template in the Finder.\n\n  See \'novy help <subcommand>\' for detailed help.\n")
     }
 
     /// Returns path to the built products directory.
