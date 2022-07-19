@@ -6,6 +6,3 @@
 import CommandShell
 
 CommandShell<НовыйEngine>.main()
-
-
-

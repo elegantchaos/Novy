@@ -16,7 +16,7 @@ extension String {
     static let dateKey = "date"
     static let yearKey = "year"
     static let ownerKey = "owner"
-    
+
     var subtitutionQuoted: String { "xXx\(self)xXx" }
 }
 
@@ -29,34 +29,34 @@ extension SubstitutionKey {
     static func quotedString(_ string: String) -> Self {
         .string(string.subtitutionQuoted)
     }
-    
+
     static func patternString(_ string: String) -> Self {
         .pattern(try! NSRegularExpression(pattern: string, options: []))
     }
 }
 
-typealias Substitutions = [SubstitutionKey:String]
-typealias Variables = [String:String]
+typealias Substitutions = [SubstitutionKey: String]
+typealias Variables = [String: String]
 
 extension Substitutions {
     static func forProject(named name: String) -> Substitutions {
         let components = name.split(separator: " ")
         let camel = components.joined(separator: "")
         let lower = camel.lowercased()
-        let underscore = components.map({ $0.uppercased() }).joined(separator: "_")
+        let underscore = components.map { $0.uppercased() }.joined(separator: "_")
         return [
             .quotedString(.projectKey): name,
             .quotedString(.projectCamelKey): camel,
             .quotedString(.projectLowercaseKey): lower,
-            .quotedString(.projectUnderscoreKey): underscore
+            .quotedString(.projectUnderscoreKey): underscore,
         ]
     }
-    
+
     func switched() -> Self {
         var result: Self = [:]
         for (key, value) in self {
             switch key {
-                case .string(let string):
+                case let .string(string):
                     result[.string(value)] = string
                 default:
                     fatalError("Can't switch non-string substitutions")
@@ -69,15 +69,15 @@ extension Substitutions {
 extension String {
     func applying(substitutions: Substitutions) -> String {
         var processed = self
-        for _ in 0..<1000 { // for safety, we will give up after 1000 iterations, just incase a combination of substitutions cause some sort of infinite loop
+        for _ in 0 ..< 1000 { // for safety, we will give up after 1000 iterations, just incase a combination of substitutions cause some sort of infinite loop
             let current = processed
             for (key, value) in substitutions {
                 switch key {
-                case .string(let string):
-                    processed = processed.replacingOccurrences(of: string, with: value)
-                    
-                case .pattern(let pattern):
-                    processed = pattern.substitute(in: processed) { _, _ in value }
+                    case let .string(string):
+                        processed = processed.replacingOccurrences(of: string, with: value)
+
+                    case let .pattern(pattern):
+                        processed = pattern.substitute(in: processed) { _, _ in value }
                 }
             }
             if current == processed {
@@ -85,7 +85,7 @@ extension String {
                 break
             }
         }
-        
+
         return processed
     }
 }

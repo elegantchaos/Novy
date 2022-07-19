@@ -11,13 +11,13 @@ struct RevealCommand: НовыйCommand {
     @Argument() var template: String
     @Flag(help: "Print the location of the template to the console, rather than revealing it.") var path: Bool
     @OptionGroup() var common: CommandShellOptions
-    
-    static public var configuration: CommandConfiguration {
+
+    public static var configuration: CommandConfiguration {
         CommandConfiguration(commandName: "reveal", abstract: "Reveal a template in the Finder.")
     }
-    
+
     func run() throws {
-        let template = engine.template(named: self.template)
+        let template = engine.template(named: template)
         if path {
             engine.output.log(template.path)
         } else {

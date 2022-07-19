@@ -1,5 +1,5 @@
-import XCTest
 import class Foundation.Bundle
+import XCTest
 
 final class novyTests: XCTestCase {
     func testExample() throws {
@@ -31,14 +31,14 @@ final class novyTests: XCTestCase {
 
     /// Returns path to the built products directory.
     var productsDirectory: URL {
-      #if os(macOS)
+        #if os(macOS)
         for bundle in Bundle.allBundles where bundle.bundlePath.hasSuffix(".xctest") {
             return bundle.bundleURL.deletingLastPathComponent()
         }
         fatalError("couldn't find the products directory")
-      #else
+        #else
         return Bundle.main.bundleURL
-      #endif
+        #endif
     }
 
     static var allTests = [

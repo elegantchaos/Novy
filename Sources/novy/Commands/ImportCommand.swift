@@ -11,16 +11,16 @@ struct ImportCommand: НовыйCommand {
     @Option() var name: String?
     @Option() var replacing: String?
     @OptionGroup() var common: CommandShellOptions
-    
-    static public var configuration: CommandConfiguration {
+
+    public static var configuration: CommandConfiguration {
         CommandConfiguration(commandName: "import", abstract: "Import a project as a template.")
     }
-    
+
     func run() throws {
-        let from = engine.fm.locations.current.folder([self.from])
+        let from = engine.fm.locations.current.folder([from])
         let originalName = from.name.name
-        let name = self.name ?? originalName
-        let replacing = self.replacing ?? originalName
+        let name = name ?? originalName
+        let replacing = replacing ?? originalName
         try engine.import(project: from, into: engine.templates, as: name, replacing: replacing)
         engine.output.log("Done.\n")
     }

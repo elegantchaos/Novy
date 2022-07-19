@@ -8,11 +8,11 @@ import CommandShell
 
 struct ListCommand: НовыйCommand {
     @OptionGroup() var common: CommandShellOptions
-    
-    static public var configuration: CommandConfiguration {
+
+    public static var configuration: CommandConfiguration {
         CommandConfiguration(commandName: "list", abstract: "List the available templates.")
     }
-    
+
     func run() throws {
         try engine.templates.forEach(filter: .folders, recursive: false) { item in
             engine.output.log(item.name.name)

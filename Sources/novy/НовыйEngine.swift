@@ -11,7 +11,7 @@ import Foundation
 class НовыйEngine: CommandEngine {
     let fm = FileManager.default
     lazy var templates = makeTemplates()
-    
+
     internal func makeTemplates() -> Folder {
         let folder = fm.locations.home.folder([".local", "share", "novy", "templates"])
         do {
@@ -22,9 +22,9 @@ class НовыйEngine: CommandEngine {
 
         return folder
     }
-    
+
     override class var abstract: String { "Tool for creating new files and/or folders from templates." }
-    
+
     override class var subcommands: [ParsableCommand.Type] {
         [
             CloneCommand.self,
@@ -34,11 +34,11 @@ class НовыйEngine: CommandEngine {
             RevealCommand.self,
         ]
     }
-    
+
     func template(named name: String) -> Folder {
-        return templates.folder([name])
+        templates.folder([name])
     }
-    
+
     var substitutions: Substitutions {
         // read extra substitutions from a .novy file if it exists
         // TODO: expand this to read reg ex patterns and functions too
@@ -55,36 +55,36 @@ class НовыйEngine: CommandEngine {
                 }
                 """)
         }
-        
+
         guard let data = try? Data(contentsOf: settings.url),
-           let json = try? JSONSerialization.jsonObject(with: data, options: []),
-           let dictionary = json as? [String:Any] else { return [:] }
-        
+              let json = try? JSONSerialization.jsonObject(with: data, options: []),
+              let dictionary = json as? [String: Any] else { return [:] }
+
         var results = Substitutions()
-        
-        if let strings = dictionary["strings"] as? [String:String] {
-            for (k,v) in strings {
+
+        if let strings = dictionary["strings"] as? [String: String] {
+            for (k, v) in strings {
                 results[.quotedString(k)] = v
             }
         }
-        
-        if let patterns = dictionary["patterns"] as? [String:String] {
-            for (k,v) in patterns {
+
+        if let patterns = dictionary["patterns"] as? [String: String] {
+            for (k, v) in patterns {
                 if let expression = try? NSRegularExpression(pattern: k, options: []) {
                     results[.pattern(expression)] = v
                 }
             }
         }
-        
+
         // TODO: functions
-        
+
         return results
     }
 
     func relativeFolder(_ components: [String]) -> Folder {
         fm.locations.current.folder(components)
     }
-    
+
     func `import`(project: Folder, into templates: Folder, as name: String, replacing: String) throws {
         output.log("Importing \(project.name) as \(name).")
 
@@ -106,7 +106,7 @@ class НовыйEngine: CommandEngine {
         output.log("Cloning from \(template) into \(destination).")
 
         var substitutions = Substitutions.forProject(named: name)
-        for (key,value) in variables {
+        for (key, value) in variables {
             substitutions[key] = value
         }
         substitutions[.quotedString("name")] = name
@@ -119,7 +119,7 @@ class НовыйEngine: CommandEngine {
                 expanded.append(copied)
             }
         }
-        
+
         for item in expanded {
             try expandTextFiles(in: item, with: substitutions)
             try expandNames(in: item, with: substitutions)
@@ -132,7 +132,7 @@ class НовыйEngine: CommandEngine {
                 try expandNames(in: item, with: substitutions)
             }
         }
-        
+
         let expandedName = item.name.name.applying(substitutions: substitutions)
         let newName = item.name.renamed(as: expandedName)
         if newName != item.name {
@@ -140,7 +140,7 @@ class НовыйEngine: CommandEngine {
             try item.rename(as: newName, replacing: false)
         }
     }
-    
+
     func expandTextFiles(in item: ThrowingCommon, with substitutions: Substitutions) throws {
         if let file = item as? File, let text = file.asText {
             let processed = text.applying(substitutions: substitutions)
@@ -154,5 +154,4 @@ class НовыйEngine: CommandEngine {
             }
         }
     }
-
 }

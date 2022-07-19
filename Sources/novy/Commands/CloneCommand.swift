@@ -13,7 +13,7 @@ struct CloneCommand: НовыйCommand {
     @Argument(help: "The location to use when expanding the template. Defaults to the working directory.") var destination: String?
     @OptionGroup() var common: CommandShellOptions
 
-    static public var configuration: CommandConfiguration {
+    public static var configuration: CommandConfiguration {
         CommandConfiguration(
             commandName: "clone",
             abstract: "Create a new item from a template.",
@@ -28,11 +28,11 @@ struct CloneCommand: НовыйCommand {
                 """
         )
     }
-    
+
     func run() throws {
-        let template = engine.template(named: self.template)
-        let destination = engine.relativeFolder([self.destination ?? self.template])
-        
+        let template = engine.template(named: template)
+        let destination = engine.relativeFolder([destination ?? self.template])
+
         let now = Date()
         let shortDate = DateFormatter.localizedString(from: now, dateStyle: .short, timeStyle: .none)
         let formatter = DateFormatter()
@@ -52,10 +52,10 @@ struct CloneCommand: НовыйCommand {
         for (key, value) in engine.substitutions {
             variables[key] = value
         }
-        
+
         let name = destination.name.name
         try engine.clone(template: template, into: destination.up, as: name, variables: variables)
-        
+
         let commands = template.file(".novy")
         if commands.exists {
             let runner = Runner(for: commands.url, cwd: container.url)
@@ -65,7 +65,7 @@ struct CloneCommand: НовыйCommand {
                 throw ArgumentParser.ExitCode(result.status)
             }
         }
-        
+
         engine.output.log("Done.")
     }
 }
